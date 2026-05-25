@@ -1,0 +1,20 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Rsvp {
+  id        String   @id @default(cuid())
+  guestName String   @unique @map("guest_name")
+  email     String?
+  starter   String?
+  entree    String
+  sides     String   @default("[]")
+  createdAt DateTime @default(now()) @map("created_at")
+
+  @@map("rsvps")
+}
