@@ -60,7 +60,7 @@ export function Footer() {
                 June 14, 2026
               </p>
               <p className="text-xs font-sans uppercase tracking-[0.3em]" style={{ color: 'var(--red)' }}>
-                Sunday
+                (Sunday)
               </p>
             </div>
           </motion.div>

@@ -176,8 +176,8 @@ export function RSVPForm() {
 
           {/* Starter selection */}
           <div className="glass-card rounded-xl p-8">
-            <h3 className="text-xl font-serif text-primary mb-6" style={{ fontFamily: 'var(--font-serif)' }}>First Course (Appetizers)</h3>
-            <p className="text-sm text-muted-foreground mb-6 font-sans">Select up to 1 first Course</p>
+            <h3 className="text-xl font-serif text-primary mb-2" style={{ fontFamily: 'var(--font-serif)' }}>First Course (Appetizers)</h3>
+            <p className="text-sm text-muted-foreground mb-6 font-sans">Select 1 first Course</p>
             <div className="grid md:grid-cols-3 gap-4">
               {starters.map((starter) => (
                 <motion.button
@@ -200,8 +200,8 @@ export function RSVPForm() {
 
           {/* Entrée selection */}
           <div className="glass-card rounded-xl p-8">
-            <h3 className="text-xl font-serif text-primary mb-6" style={{ fontFamily: 'var(--font-serif)' }}>Main Course (Entree)</h3>
-            <p className="text-sm text-muted-foreground mb-6 font-sans">Select up to 1 Main Course</p>
+            <h3 className="text-xl font-serif text-primary mb-2" style={{ fontFamily: 'var(--font-serif)' }}>Main Course (Entree)</h3>
+            <p className="text-sm text-muted-foreground mb-6 font-sans">Select 1 Main Course</p>
             <div className="grid md:grid-cols-2 gap-4">
               {entrees.map((entree) => (
                 <motion.button
@@ -262,11 +262,12 @@ export function RSVPForm() {
                       : 'border-border hover:border-primary/50'
                     }`}
                 >
-                  <p className="font-serif text-cream text-sm mb-1" style={{ fontFamily: 'var(--font-serif)' }}>{side.name}</p>
+                  <p className="font-serif text-cream text-lg mb-1" style={{ fontFamily: 'var(--font-serif)' }}>{side.name}</p>
                   <p className="text-xs text-muted-foreground font-sans">{side.description}</p>
                 </motion.button>
               ))}
             </div>
+            <p className="text-sm text-cream mt-4 font-sans text-center">*Alcoholic beverages are not included*</p>
           </div>
 
           {/* Error message */}

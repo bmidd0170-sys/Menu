@@ -36,7 +36,7 @@ export const entrees: MenuItem[] = [
     },
     {
         id: 'entree-braised-ribs',
-        name: 'Island-Style Braised Short Ribs',
+        name: 'Island-Style Braised Short Ribs (Beef)',
         price: '$36.00',
         description: 'Creamed sweet corn, asparagus and mushrooms',
     },

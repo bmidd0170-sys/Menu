@@ -79,7 +79,7 @@ export function EventDetails() {
             Kimpton Grand Roatán Resort & Spa
           </p>
           <p className="text-muted-foreground font-sans">
-            <span style={{ color: 'var(--red)' }}>Alera</span>
+            <span className="text-lg" style={{ color: 'var(--red)' }}>ALera</span>
           </p>
         </motion.div>
 
@@ -95,7 +95,7 @@ export function EventDetails() {
               June 14, 2026
             </p>
             <p className="text-sm md:text-base font-sans uppercase tracking-[0.3em]" style={{ color: 'var(--red)' }}>
-              Sunday
+              (Sunday)
             </p>
           </div>
         </motion.div>
