@@ -55,9 +55,14 @@ export function Footer() {
             <p className="text-xs text-muted-foreground/60 font-sans tracking-widest uppercase">
               Patricia&apos;s 60th Birthday Celebration
             </p>
-            <p className="text-xs text-muted-foreground/40 font-sans mt-1">
-              July 14, 2025
-            </p>
+            <div className="mt-1 space-y-1">
+              <p className="text-xs text-muted-foreground/40 font-sans">
+                June 14, 2026
+              </p>
+              <p className="text-xs font-sans uppercase tracking-[0.3em]" style={{ color: 'var(--red)' }}>
+                Sunday
+              </p>
+            </div>
           </motion.div>
         </div>
       </div>

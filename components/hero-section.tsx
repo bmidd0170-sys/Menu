@@ -48,7 +48,7 @@ export function HeroSection() {
         >
           <span className="text-red-gradient">Patricia&apos;s</span>
           <br />
-          <span className="text-cream">60th Birthday</span>
+          <span className="text-cream">60th Birthday Menu</span>
         </motion.h1>
         
         {/* Celebration text */}
@@ -59,7 +59,7 @@ export function HeroSection() {
           className="text-2xl md:text-3xl text-primary font-serif italic mb-12"
           style={{ fontFamily: 'var(--font-serif)' }}
         >
-          Celebration
+          
         </motion.p>
         
         {/* Date */}
@@ -71,7 +71,7 @@ export function HeroSection() {
         >
           <div className="glass-card px-8 py-4 rounded-lg">
             <p className="text-lg md:text-xl text-muted-foreground tracking-widest uppercase font-sans">
-              Dinner Selection 
+              Dinner Preferences
             </p>
           </div>
         </motion.div>

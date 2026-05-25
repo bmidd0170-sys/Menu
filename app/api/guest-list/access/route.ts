@@ -6,8 +6,6 @@ import {
   isValidGuestListCode,
 } from '@/lib/guest-list-access'
 
-const GUEST_LIST_ACCESS_MAX_AGE = 60 * 60 * 72
-
 type AccessPayload = {
   code?: string
 }
@@ -41,7 +39,6 @@ export async function POST(request: Request) {
     sameSite: 'lax',
     secure: process.env.NODE_ENV === 'production',
     path: '/',
-    maxAge: GUEST_LIST_ACCESS_MAX_AGE,
   })
 
   return response

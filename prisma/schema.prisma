@@ -14,6 +14,7 @@ model Rsvp {
   starter   String?
   entree    String
   sides     String   @default("[]")
+  bbqPreference Boolean @default(false) @map("bbq_preference")
   createdAt DateTime @default(now()) @map("created_at")
 
   @@map("rsvps")

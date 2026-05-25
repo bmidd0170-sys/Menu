@@ -3,13 +3,14 @@ import { prisma } from '@/lib/prisma'
 import { cookies } from 'next/headers'
 import { GUEST_LIST_ACCESS_COOKIE, hasGuestListAccessCookie } from '@/lib/guest-list-access'
 
-export async function DELETE(request: Request, { params }: { params: { id: string } }) {
+export async function DELETE(request: Request, { params }: { params: Promise<{ id: string }> }) {
   const cookieStore = await cookies()
   if (!hasGuestListAccessCookie(cookieStore.get(GUEST_LIST_ACCESS_COOKIE)?.value)) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
   }
 
-  let id = params?.id
+  const resolvedParams = await params
+  let id = resolvedParams?.id
 
   if (!id) {
     try {
@@ -34,13 +35,13 @@ export async function DELETE(request: Request, { params }: { params: { id: strin
   }
 }
 
-export async function PATCH(request: Request, { params }: { params: { id: string } }) {
+export async function PATCH(request: Request, { params }: { params: Promise<{ id: string }> }) {
   const cookieStore = await cookies()
   if (!hasGuestListAccessCookie(cookieStore.get(GUEST_LIST_ACCESS_COOKIE)?.value)) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
   }
 
-  const id = params.id
+  const { id } = await params
   const body = (await request.json().catch(() => null)) as Record<string, unknown> | null
 
   if (!body) {
@@ -53,6 +54,7 @@ export async function PATCH(request: Request, { params }: { params: { id: string
   if (typeof body.starter === 'string') data.starter = body.starter || null
   if (typeof body.entree === 'string') data.entree = body.entree
   if (Array.isArray(body.sides)) data.sides = JSON.stringify((body.sides as string[]).slice(0, 2))
+  if (typeof body.bbq_preference === 'boolean') data.bbqPreference = body.bbq_preference
 
   try {
     const updated = await prisma.rsvp.update({ where: { id }, data })
@@ -63,6 +65,7 @@ export async function PATCH(request: Request, { params }: { params: { id: string
       starter: updated.starter,
       entree: updated.entree,
       sides: JSON.parse(updated.sides),
+      bbq_preference: updated.bbqPreference,
       created_at: updated.createdAt.toISOString(),
     }})
   } catch (err) {

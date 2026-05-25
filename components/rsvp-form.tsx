@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import { useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useInView } from 'framer-motion'
 import { useRef } from 'react'
@@ -10,6 +11,7 @@ import menu from '@/data/menu'
 const starters = menu.starters
 const entrees = [...(menu.entrees || []), ...(menu.mains || [])]
 const sides = menu.sides
+const smokedChickenId = 'entree-smoked-chicken'
 
 export function RSVPForm() {
   const ref = useRef(null)
@@ -20,6 +22,7 @@ export function RSVPForm() {
   const [selectedStarter, setSelectedStarter] = useState('')
   const [selectedEntree, setSelectedEntree] = useState('')
   const [selectedSides, setSelectedSides] = useState<string[]>([])
+  const [wantsBbq, setWantsBbq] = useState(false)
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [isSubmitted, setIsSubmitted] = useState(false)
   const [error, setError] = useState('')
@@ -33,6 +36,12 @@ export function RSVPForm() {
           : prev
     )
   }
+
+  useEffect(() => {
+    if (selectedEntree !== smokedChickenId) {
+      setWantsBbq(false)
+    }
+  }, [selectedEntree])
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -61,6 +70,7 @@ export function RSVPForm() {
           starter: selectedStarter || null,
           entree: selectedEntree,
           sides: selectedSides,
+          bbq_preference: wantsBbq,
         }),
       })
 
@@ -122,11 +132,11 @@ export function RSVPForm() {
           className="text-center mb-12"
         >
           <h2 className="text-4xl md:text-5xl font-serif font-light text-cream mb-4" style={{ fontFamily: 'var(--font-serif)' }}>
-            Menu Selection
+            Dinner Preferences
           </h2>
           <div className="w-16 h-px bg-primary mx-auto mb-4" />
           <p className="text-muted-foreground font-sans max-w-lg mx-auto">
-            Please select your dinner preferences below. Choose one starter, one entrée, and up to two sides.
+            Please select your dinner preferences below. Choose one starter, one main course, and up to two sides.
           </p>
         </motion.div>
 
@@ -166,7 +176,8 @@ export function RSVPForm() {
 
           {/* Starter selection */}
           <div className="glass-card rounded-xl p-8">
-            <h3 className="text-xl font-serif text-primary mb-6" style={{ fontFamily: 'var(--font-serif)' }}>First Course</h3>
+            <h3 className="text-xl font-serif text-primary mb-6" style={{ fontFamily: 'var(--font-serif)' }}>First Course (Appetizers)</h3>
+            <p className="text-sm text-muted-foreground mb-6 font-sans">Select up to 1 first Course</p>
             <div className="grid md:grid-cols-3 gap-4">
               {starters.map((starter) => (
                 <motion.button
@@ -189,7 +200,8 @@ export function RSVPForm() {
 
           {/* Entrée selection */}
           <div className="glass-card rounded-xl p-8">
-            <h3 className="text-xl font-serif text-primary mb-6" style={{ fontFamily: 'var(--font-serif)' }}>Main Course *</h3>
+            <h3 className="text-xl font-serif text-primary mb-6" style={{ fontFamily: 'var(--font-serif)' }}>Main Course (Entree)</h3>
+            <p className="text-sm text-muted-foreground mb-6 font-sans">Select up to 1 Main Course</p>
             <div className="grid md:grid-cols-2 gap-4">
               {entrees.map((entree) => (
                 <motion.button
@@ -208,6 +220,29 @@ export function RSVPForm() {
                 </motion.button>
               ))}
             </div>
+
+            {selectedEntree === smokedChickenId && (
+              <motion.div
+                initial={{ opacity: 0, y: -8 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="mt-6 rounded-lg border border-primary/30 bg-primary/5 p-4"
+              >
+                <p className="text-sm text-cream font-sans mb-3">
+                  Would you like BBQ as a side option?
+                </p>
+                <button
+                  type="button"
+                  onClick={() => setWantsBbq((prev) => !prev)}
+                  className={`rounded-md border px-4 py-2 text-sm font-sans transition-colors ${
+                    wantsBbq
+                      ? 'border-primary bg-primary/10 text-cream'
+                      : 'border-border text-muted-foreground hover:border-primary/50 hover:text-cream'
+                  }`}
+                >
+                  {wantsBbq ? 'BBQ preferred' : 'Add BBQ as a side'}
+                </button>
+              </motion.div>
+            )}
           </div>
 
           {/* Sides selection */}

@@ -10,6 +10,7 @@ type RsvpPayload = {
     starter?: string | null
     entree?: string
     sides?: string[]
+    bbq_preference?: boolean
 }
 
 function serializeRsvp(rsvp: {
@@ -19,6 +20,7 @@ function serializeRsvp(rsvp: {
     starter: string | null
     entree: string
     sides: string
+    bbqPreference: boolean
     createdAt: Date
 }) {
     return {
@@ -28,6 +30,7 @@ function serializeRsvp(rsvp: {
         starter: rsvp.starter,
         entree: rsvp.entree,
         sides: JSON.parse(rsvp.sides) as string[],
+        bbq_preference: rsvp.bbqPreference,
         created_at: rsvp.createdAt.toISOString(),
     }
 }
@@ -94,6 +97,7 @@ export async function POST(request: Request) {
     const starter = body.starter?.trim() || null
     const entree = body.entree?.trim()
     const sides = Array.isArray(body.sides) ? body.sides.slice(0, 2) : []
+    const bbqPreference = Boolean(body.bbq_preference)
 
     if (!guestName) {
         return NextResponse.json({ error: 'Please enter your name.' }, { status: 400 })
@@ -111,6 +115,7 @@ export async function POST(request: Request) {
                 starter,
                 entree,
                 sides: JSON.stringify(sides),
+                bbqPreference,
             },
         })
 

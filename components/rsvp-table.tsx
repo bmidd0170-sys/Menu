@@ -25,6 +25,7 @@ interface RSVP {
   starter: string | null
   entree: string
   sides: string[]
+  bbq_preference?: boolean
   created_at: string
 }
 
@@ -39,9 +40,9 @@ const prettyLabel = (id?: string | null) => {
 }
 
 const starterLabels: Record<string, string> = {
-  soup: 'Butternut Squash Soup',
-  salad: 'Autumn Harvest Salad',
-  none: 'No Starter',
+  'starter-shrimp-empanadas': 'Caribbean Shrimp Empanadas',
+  'starter-ceviche': 'Captain Catch Ceviche',
+  'starter-chicken-wings': 'Chicken Wings',
 }
 
 const entreeLabels: Record<string, string> = {
@@ -56,6 +57,14 @@ const sideLabels: Record<string, string> = {
   potatoes: 'Potatoes',
   greenbeans: 'Haricots Verts',
   brussels: 'Brussels Sprouts',
+}
+
+const formatPreference = (rsvp: RSVP) => {
+  if (rsvp.bbq_preference) {
+    return 'BBQ preferred'
+  }
+
+  return '-'
 }
 
 export function RSVPTable({ showActions = false }: { showActions?: boolean }) {
@@ -150,6 +159,9 @@ export function RSVPTable({ showActions = false }: { showActions?: boolean }) {
                     <th className="px-6 py-4 text-left text-sm font-sans font-medium text-primary uppercase tracking-wider hidden lg:table-cell">
                       Sides
                     </th>
+                    <th className="px-6 py-4 text-left text-sm font-sans font-medium text-primary uppercase tracking-wider hidden lg:table-cell">
+                      Preferences
+                    </th>
                   </tr>
                 </thead>
                 <tbody>
@@ -179,6 +191,11 @@ export function RSVPTable({ showActions = false }: { showActions?: boolean }) {
                           {rsvp.sides.length > 0
                             ? rsvp.sides.map((s) => sideLabels[s] || prettyLabel(s)).join(', ')
                             : '-'}
+                        </p>
+                      </td>
+                      <td className="px-6 py-4 hidden lg:table-cell">
+                        <p className="text-muted-foreground font-sans text-sm">
+                          {formatPreference(rsvp)}
                         </p>
                       </td>
                       {showActions ? (

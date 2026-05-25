@@ -8,42 +8,16 @@ export type MenuItem = {
 
 export const starters: MenuItem[] = [
     {
-        id: 'starter-fish-wing',
-        name: 'Fish Wing',
-        price: '$18.00',
-        description: 'Crispy fried fish collar, copan mole, roasted garlic, sour cream tartar',
-    },
-    {
-        id: 'starter-tuna-crudo',
-        name: 'Arabic Roatan Tuna Crudo',
-        price: '$18.00',
-        description: 'Chickpeas-tahini emulsion, pear & balsamic relish, organic honey, sumac crispy coral rice',
-    },
-    {
-        id: 'starter-paradise-salad',
-        name: 'Paradise Garden Salad',
-        price: '$15.00',
-        description: 'Honduran lettuce, pistachio vinaigrette, grilled avocado, watermelon, beetroot hummus, pollen',
-        tags: ['vegan'],
+        id: 'starter-ceviche',
+        name: 'Captain Catch Ceviche',
+        price: '$19.00',
+        description: 'Lionfish, sliced conch, nance leche de tigre, burnt orange, red onion, plantain chips, grapes',
     },
     {
         id: 'starter-shrimp-empanadas',
         name: 'Caribbean Shrimp Empanadas',
         price: '$17.00',
         description: 'Corn empanadas filled with caribbean shrimp, roasted tomato sauce, pickles, honduran cheese',
-    },
-    {
-        id: 'starter-burrata-papaya',
-        name: 'Burrata & Grilled Papaya',
-        price: '$18.00',
-        description: 'Caramelized coconut, papaya chutney, basil, mint, toasted cashew dressing',
-        tags: ['vegetarian'],
-    },
-    {
-        id: 'starter-ceviche',
-        name: 'Captain Catch Ceviche',
-        price: '$19.00',
-        description: 'Lionfish, sliced conch, nance leche de tigre, burnt orange, red onion, plantain chips, grapes',
     },
     {
         id: 'starter-chicken-wings',
@@ -90,12 +64,9 @@ export const mains: MenuItem[] = [
 ]
 
 export const sides: MenuItem[] = [
-    { id: 'side-roasted-sweet-potato', name: 'Roasted Sweet Potato', price: '$6.00' },
-    { id: 'side-creamed-corn', name: 'Creamed Sweet Corn', price: '$6.00' },
-    { id: 'side-yuca-al-mojo', name: 'Yuca al Mojo', price: '$6.00' },
-    { id: 'side-glazed-carrot', name: 'Glazed Carrot Purée', price: '$5.00' },
-    { id: 'side-fried-plantains', name: 'Fried Plantains', price: '$5.00' },
-    { id: 'side-pineapple-chimol', name: 'Pineapple Chimol', price: '$5.00' },
+    { id: 'side-mash-potatoes', name: 'Mash Potatoes', price: '$5.00' },
+    { id: 'side-loaded-mixed-greens', name: 'Loaded Mixed Greens', price: '$6.00' },
+    { id: 'side-rice-beans', name: 'Rice and Beans', price: '$6.00' },
 ]
 
 const menu = { starters, entrees, mains, sides }

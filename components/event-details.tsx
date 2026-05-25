@@ -79,7 +79,7 @@ export function EventDetails() {
             Kimpton Grand Roatán Resort & Spa
           </p>
           <p className="text-muted-foreground font-sans">
-            West Bay, Roatán, Bay Islands, Honduras
+            <span style={{ color: 'var(--red)' }}>Alera</span>
           </p>
         </motion.div>
 
@@ -90,9 +90,14 @@ export function EventDetails() {
           className="glass-card rounded-xl p-8 mb-16 text-center"
         >
           <p className="text-primary text-lg tracking-widest uppercase mb-2 font-sans">Date</p>
-          <p className="text-2xl md:text-3xl font-serif text-cream mb-2" style={{ fontFamily: 'var(--font-serif)' }}>
-            July 14, 2025
-          </p>
+          <div className="space-y-1">
+            <p className="text-2xl md:text-3xl font-serif text-cream" style={{ fontFamily: 'var(--font-serif)' }}>
+              June 14, 2026
+            </p>
+            <p className="text-sm md:text-base font-sans uppercase tracking-[0.3em]" style={{ color: 'var(--red)' }}>
+              Sunday
+            </p>
+          </div>
         </motion.div>
 
         {/* Timeline removed per request */}

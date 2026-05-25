@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter, DialogDescription, DialogClose, DialogTrigger } from '@/components/ui/dialog'
 import { Button } from '@/components/ui/button'
 import {
@@ -26,12 +26,14 @@ type RSVP = {
   starter?: string | null
   entree: string
   sides: string[]
+  bbq_preference?: boolean
 }
 
 export function EditRsvpDialog({ rsvp, children }: { rsvp: RSVP; children: React.ReactNode }) {
   const starters = menu.starters
   const entrees = [...(menu.entrees || []), ...(menu.mains || [])]
   const sides = menu.sides
+  const smokedChickenId = 'entree-smoked-chicken'
 
   const [open, setOpen] = useState(false)
   const [name, setName] = useState(rsvp.guest_name)
@@ -39,11 +41,18 @@ export function EditRsvpDialog({ rsvp, children }: { rsvp: RSVP; children: React
   const [starter, setStarter] = useState<string | null>(rsvp.starter || null)
   const [entree, setEntree] = useState(rsvp.entree)
   const [selectedSides, setSelectedSides] = useState<string[]>(rsvp.sides || [])
+  const [wantsBbq, setWantsBbq] = useState(Boolean(rsvp.bbq_preference))
   const [isSaving, setIsSaving] = useState(false)
 
   const toggleSide = (id: string) => {
     setSelectedSides((prev) => (prev.includes(id) ? prev.filter((s) => s !== id) : prev.length < 2 ? [...prev, id] : prev))
   }
+
+  useEffect(() => {
+    if (entree !== smokedChickenId) {
+      setWantsBbq(false)
+    }
+  }, [entree])
 
   const handleSave = async () => {
     if (!name.trim()) return alert('Name is required')
@@ -59,6 +68,7 @@ export function EditRsvpDialog({ rsvp, children }: { rsvp: RSVP; children: React
           starter: starter || null,
           entree,
           sides: selectedSides,
+          bbq_preference: wantsBbq,
         }),
       })
 
@@ -108,9 +118,9 @@ export function EditRsvpDialog({ rsvp, children }: { rsvp: RSVP; children: React
 
           <div>
             <label className="text-sm text-muted-foreground mb-2 block">Starter</label>
-            <Select onValueChange={(v: string) => setStarter(v === 'none' ? null : v)}>
+            <Select value={starter ?? 'none'} onValueChange={(v: string) => setStarter(v === 'none' ? null : v)}>
               <SelectTrigger>
-                <SelectValue>{starter ? starters.find((s) => s.id === starter)?.name : 'No starter'}</SelectValue>
+                <SelectValue placeholder="No starter" />
               </SelectTrigger>
               <SelectContent>
                 <SelectItem value="none">No starter</SelectItem>
@@ -122,10 +132,10 @@ export function EditRsvpDialog({ rsvp, children }: { rsvp: RSVP; children: React
           </div>
 
           <div>
-            <label className="text-sm text-muted-foreground mb-2 block">Entrée</label>
-            <Select onValueChange={(v: string) => setEntree(v)}>
+            <label className="text-sm text-muted-foreground mb-2 block">Main Entree</label>
+            <Select value={entree} onValueChange={(v: string) => setEntree(v)}>
               <SelectTrigger>
-                <SelectValue>{entrees.find((e) => e.id === entree)?.name}</SelectValue>
+                <SelectValue placeholder="Select a main entree" />
               </SelectTrigger>
               <SelectContent>
                 {entrees.map((e) => (
@@ -134,6 +144,19 @@ export function EditRsvpDialog({ rsvp, children }: { rsvp: RSVP; children: React
               </SelectContent>
             </Select>
           </div>
+
+          {entree === smokedChickenId && (
+            <div>
+              <p className="text-sm text-muted-foreground mb-2 block">BBQ preference</p>
+              <Button
+                type="button"
+                variant={wantsBbq ? 'default' : 'outline'}
+                onClick={() => setWantsBbq((prev) => !prev)}
+              >
+                {wantsBbq ? 'BBQ preferred' : 'Add BBQ preference'}
+              </Button>
+            </div>
+          )}
 
           <div>
             <label className="text-sm text-muted-foreground mb-2 block">Sides (up to 2)</label>
