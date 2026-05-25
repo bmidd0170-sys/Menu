@@ -4,31 +4,17 @@ import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useInView } from 'framer-motion'
 import { useRef } from 'react'
+import menu from '@/data/menu'
 
-const starters = [
-  { id: 'soup', name: 'Butternut Squash Soup', description: 'Silky smooth with crème fraîche and toasted pepitas' },
-  { id: 'salad', name: 'Autumn Harvest Salad', description: 'Mixed greens, candied walnuts, pears, gorgonzola' },
-  { id: 'none', name: 'No Starter', description: 'Skip the first course' },
-]
-
-const entrees = [
-  { id: 'beef', name: 'Filet Mignon', description: 'Prime cut with red wine reduction, truffle mashed potatoes' },
-  { id: 'salmon', name: 'Pan-Seared Salmon', description: 'Wild-caught with lemon beurre blanc, seasonal vegetables' },
-  { id: 'chicken', name: 'Herb-Roasted Chicken', description: 'Free-range with rosemary jus, roasted fingerlings' },
-  { id: 'vegetarian', name: 'Wild Mushroom Risotto', description: 'Arborio rice, porcini, parmesan, white truffle oil' },
-]
-
-const sides = [
-  { id: 'asparagus', name: 'Grilled Asparagus', description: 'With hollandaise' },
-  { id: 'potatoes', name: 'Roasted Potatoes', description: 'Herb-seasoned' },
-  { id: 'greenbeans', name: 'Haricots Verts', description: 'With almonds' },
-  { id: 'brussels', name: 'Brussels Sprouts', description: 'Crispy bacon bits' },
-]
+// Use the shared menu data; combine entree + mains for main course options
+const starters = menu.starters
+const entrees = [...(menu.entrees || []), ...(menu.mains || [])]
+const sides = menu.sides
 
 export function RSVPForm() {
   const ref = useRef(null)
   const isInView = useInView(ref, { once: true, margin: '-100px' })
-  
+
   const [guestName, setGuestName] = useState('')
   const [email, setEmail] = useState('')
   const [selectedStarter, setSelectedStarter] = useState('')
@@ -43,15 +29,15 @@ export function RSVPForm() {
       prev.includes(sideId)
         ? prev.filter((id) => id !== sideId)
         : prev.length < 2
-        ? [...prev, sideId]
-        : prev
+          ? [...prev, sideId]
+          : prev
     )
   }
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setError('')
-    
+
     if (!guestName.trim()) {
       setError('Please enter your name')
       return
@@ -60,9 +46,9 @@ export function RSVPForm() {
       setError('Please select an entrée')
       return
     }
-    
+
     setIsSubmitting(true)
-    
+
     try {
       const response = await fetch('/api/rsvps', {
         method: 'POST',
@@ -84,7 +70,7 @@ export function RSVPForm() {
         setError(result?.error ?? 'Failed to submit RSVP. Please try again.')
         return
       }
-      
+
       setIsSubmitted(true)
       window.dispatchEvent(new Event('rsvp-updated'))
     } catch {
@@ -117,7 +103,7 @@ export function RSVPForm() {
               Thank You, {guestName}!
             </h3>
             <p className="text-muted-foreground font-sans">
-              Your RSVP has been received. We look forward to celebrating with you.
+              Your dinner selection has been received. We look forward to celebrating with you.
             </p>
           </motion.div>
         </div>
@@ -136,7 +122,7 @@ export function RSVPForm() {
           className="text-center mb-12"
         >
           <h2 className="text-4xl md:text-5xl font-serif font-light text-cream mb-4" style={{ fontFamily: 'var(--font-serif)' }}>
-            RSVP & Menu Selection
+            Menu Selection
           </h2>
           <div className="w-16 h-px bg-primary mx-auto mb-4" />
           <p className="text-muted-foreground font-sans max-w-lg mx-auto">
@@ -189,11 +175,10 @@ export function RSVPForm() {
                   onClick={() => setSelectedStarter(starter.id)}
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
-                  className={`p-4 rounded-lg border-2 text-left transition-all ${
-                    selectedStarter === starter.id
+                  className={`p-4 rounded-lg border-2 text-left transition-all ${selectedStarter === starter.id
                       ? 'border-primary bg-primary/10'
                       : 'border-border hover:border-primary/50'
-                  }`}
+                    }`}
                 >
                   <p className="font-serif text-cream mb-1" style={{ fontFamily: 'var(--font-serif)' }}>{starter.name}</p>
                   <p className="text-xs text-muted-foreground font-sans">{starter.description}</p>
@@ -213,11 +198,10 @@ export function RSVPForm() {
                   onClick={() => setSelectedEntree(entree.id)}
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
-                  className={`p-5 rounded-lg border-2 text-left transition-all ${
-                    selectedEntree === entree.id
+                  className={`p-5 rounded-lg border-2 text-left transition-all ${selectedEntree === entree.id
                       ? 'border-primary bg-primary/10'
                       : 'border-border hover:border-primary/50'
-                  }`}
+                    }`}
                 >
                   <p className="font-serif text-cream text-lg mb-1" style={{ fontFamily: 'var(--font-serif)' }}>{entree.name}</p>
                   <p className="text-sm text-muted-foreground font-sans">{entree.description}</p>
@@ -238,11 +222,10 @@ export function RSVPForm() {
                   onClick={() => toggleSide(side.id)}
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
-                  className={`p-4 rounded-lg border-2 text-left transition-all ${
-                    selectedSides.includes(side.id)
+                  className={`p-4 rounded-lg border-2 text-left transition-all ${selectedSides.includes(side.id)
                       ? 'border-primary bg-primary/10'
                       : 'border-border hover:border-primary/50'
-                  }`}
+                    }`}
                 >
                   <p className="font-serif text-cream text-sm mb-1" style={{ fontFamily: 'var(--font-serif)' }}>{side.name}</p>
                   <p className="text-xs text-muted-foreground font-sans">{side.description}</p>
@@ -282,7 +265,7 @@ export function RSVPForm() {
                 Submitting...
               </span>
             ) : (
-              'Confirm RSVP'
+              'Confirm Dinner Selection'
             )}
           </motion.button>
         </motion.form>

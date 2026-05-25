@@ -64,7 +64,7 @@ export function FloatingParticles() {
         // Pulsing opacity
         const pulseOpacity = particle.opacity + Math.sin(particle.pulse) * 0.2
 
-        // Draw red particle with glow
+        // Draw white particle with glow
         ctx.save()
         ctx.globalAlpha = Math.max(0, pulseOpacity)
         
@@ -73,9 +73,9 @@ export function FloatingParticles() {
           particle.x, particle.y, 0,
           particle.x, particle.y, particle.size * 3
         )
-        gradient.addColorStop(0, 'rgba(200, 60, 60, 0.8)')
-        gradient.addColorStop(0.5, 'rgba(200, 60, 60, 0.3)')
-        gradient.addColorStop(1, 'rgba(200, 60, 60, 0)')
+        gradient.addColorStop(0, 'rgba(255, 255, 255, 0.85)')
+        gradient.addColorStop(0.5, 'rgba(255, 255, 255, 0.3)')
+        gradient.addColorStop(1, 'rgba(255, 255, 255, 0)')
         
         ctx.beginPath()
         ctx.arc(particle.x, particle.y, particle.size * 3, 0, Math.PI * 2)
@@ -85,7 +85,7 @@ export function FloatingParticles() {
         // Core particle
         ctx.beginPath()
         ctx.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2)
-        ctx.fillStyle = 'rgba(255, 100, 100, 0.9)'
+        ctx.fillStyle = 'rgba(255, 255, 255, 0.95)'
         ctx.fill()
         
         ctx.restore()

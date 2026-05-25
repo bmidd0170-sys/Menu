@@ -5,8 +5,15 @@ import { motion } from 'framer-motion'
 export function HeroSection() {
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
+      {/* Background image (place your image at /public/images/patricia-60.jpg) */}
+      <div
+        className="absolute inset-0 z-0 bg-cover bg-no-repeat"
+        style={{ backgroundImage: "url('/1596298992813115960.png')", backgroundPosition: 'center top' }}
+        aria-hidden="true"
+      />
+
       {/* Background gradient overlay */}
-      <div className="absolute inset-0 bg-gradient-to-b from-background via-background/95 to-background z-10" />
+      <div className="absolute inset-0 bg-gradient-to-b from-background/75 via-background/55 to-background/85 z-10" />
       
       {/* Decorative elements */}
       <div className="absolute top-20 left-10 w-32 h-32 border border-primary/20 rounded-full animate-pulse" />
@@ -29,7 +36,6 @@ export function HeroSection() {
           transition={{ duration: 0.8, delay: 0.4 }}
           className="text-primary/80 tracking-[0.3em] uppercase text-sm font-sans mb-4"
         >
-          You are cordially invited to
         </motion.p>
         
         {/* Main title */}
@@ -65,7 +71,7 @@ export function HeroSection() {
         >
           <div className="glass-card px-8 py-4 rounded-lg">
             <p className="text-lg md:text-xl text-muted-foreground tracking-widest uppercase font-sans">
-              Saturday, August 23rd, 2025
+              Dinner Selection 
             </p>
           </div>
         </motion.div>

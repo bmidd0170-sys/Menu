@@ -62,7 +62,7 @@ export function EventDetails() {
           className="text-center mb-16"
         >
           <h2 className="text-4xl md:text-5xl font-serif font-light text-cream mb-4" style={{ fontFamily: 'var(--font-serif)' }}>
-            Evening Schedule
+           Location & Date
           </h2>
           <div className="w-16 h-px bg-primary mx-auto" />
         </motion.div>
@@ -76,64 +76,26 @@ export function EventDetails() {
         >
           <p className="text-primary text-lg tracking-widest uppercase mb-2 font-sans">Venue</p>
           <p className="text-2xl md:text-3xl font-serif text-cream mb-2" style={{ fontFamily: 'var(--font-serif)' }}>
-            The Grand Ballroom
+            Kimpton Grand Roatán Resort & Spa
           </p>
           <p className="text-muted-foreground font-sans">
-            123 Celebration Avenue, Elegance City
+            West Bay, Roatán, Bay Islands, Honduras
           </p>
         </motion.div>
 
-        {/* Timeline */}
-        <div className="relative">
-          {/* Vertical line */}
-          <div className="absolute left-1/2 -translate-x-px top-0 bottom-0 w-0.5 bg-gradient-to-b from-primary/0 via-primary/50 to-primary/0 hidden md:block" />
-
-          <div className="space-y-12">
-            {eventDetails.map((event, index) => (
-              <motion.div
-                key={event.time}
-                initial={{ opacity: 0, x: index % 2 === 0 ? -50 : 50 }}
-                animate={isInView ? { opacity: 1, x: 0 } : {}}
-                transition={{ duration: 0.8, delay: 0.3 + index * 0.15 }}
-                className={`flex items-center gap-8 ${index % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'} flex-col md:flex-row`}
-              >
-                {/* Content card */}
-                <div className={`flex-1 ${index % 2 === 0 ? 'md:text-right' : 'md:text-left'} text-center md:text-inherit`}>
-                  <div className="glass-card rounded-xl p-6 inline-block">
-                    <p className="text-primary text-sm tracking-widest uppercase mb-1 font-sans">{event.time}</p>
-                    <h3 className="text-xl font-serif text-cream mb-2" style={{ fontFamily: 'var(--font-serif)' }}>
-                      {event.title}
-                    </h3>
-                    <p className="text-muted-foreground text-sm font-sans">{event.description}</p>
-                  </div>
-                </div>
-
-                {/* Center icon */}
-                <div className="relative z-10 flex-shrink-0">
-                  <div className="w-14 h-14 rounded-full bg-charcoal border-2 border-primary flex items-center justify-center text-primary">
-                    {event.icon}
-                  </div>
-                </div>
-
-                {/* Spacer for alternating layout */}
-                <div className="flex-1 hidden md:block" />
-              </motion.div>
-            ))}
-          </div>
-        </div>
-
-        {/* Dress code */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 10 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.8, delay: 0.9 }}
-          className="mt-16 text-center"
+          transition={{ duration: 0.8, delay: 0.25 }}
+          className="glass-card rounded-xl p-8 mb-16 text-center"
         >
-          <p className="text-muted-foreground tracking-widest uppercase text-sm mb-2 font-sans">Dress Code</p>
-          <p className="text-2xl font-serif text-primary italic" style={{ fontFamily: 'var(--font-serif)' }}>
-            Black Tie Optional
+          <p className="text-primary text-lg tracking-widest uppercase mb-2 font-sans">Date</p>
+          <p className="text-2xl md:text-3xl font-serif text-cream mb-2" style={{ fontFamily: 'var(--font-serif)' }}>
+            July 14, 2025
           </p>
         </motion.div>
+
+        {/* Timeline removed per request */}
       </div>
     </section>
   )

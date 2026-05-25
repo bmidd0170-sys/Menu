@@ -24,9 +24,9 @@ export function Footer() {
             className="text-2xl md:text-3xl font-serif text-cream italic"
             style={{ fontFamily: 'var(--font-serif)' }}
           >
-            &ldquo;Sixty years of grace, love, and laughter&rdquo;
+            &ldquo;Sixty years of <span style={{ color: 'var(--red)' }}>grace</span>, <span style={{ color: 'var(--red)' }}>love</span>, and <span style={{ color: 'var(--red)' }}>laughter</span>&rdquo;
           </motion.p>
-
+          
           <motion.div
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
@@ -41,7 +41,7 @@ export function Footer() {
               href="mailto:celebration@example.com"
               className="text-primary hover:text-primary/80 transition-colors font-sans"
             >
-              celebration@example.com
+              bkhouse275@gmail.com
             </a>
           </motion.div>
 
@@ -56,7 +56,7 @@ export function Footer() {
               Patricia&apos;s 60th Birthday Celebration
             </p>
             <p className="text-xs text-muted-foreground/40 font-sans mt-1">
-              August 23rd, 2025
+              July 14, 2025
             </p>
           </motion.div>
         </div>

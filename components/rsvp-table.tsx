@@ -4,6 +4,20 @@ import { useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
 import { useInView } from 'framer-motion'
 import { useRef } from 'react'
+import { Button } from '@/components/ui/button'
+import { Trash as TrashIcon } from 'lucide-react'
+import {
+  AlertDialog,
+  AlertDialogTrigger,
+  AlertDialogContent,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogAction,
+  AlertDialogCancel,
+} from '@/components/ui/alert-dialog'
+import EditRsvpDialog from './edit-rsvp-dialog'
 
 interface RSVP {
   id: string
@@ -12,6 +26,16 @@ interface RSVP {
   entree: string
   sides: string[]
   created_at: string
+}
+
+const prettyLabel = (id?: string | null) => {
+  if (!id) return ''
+  // remove common prefixes like "starter-", "entree-", "side-"
+  const cleaned = id.replace(/^(starter-|entree-|side-)/, '')
+  return cleaned
+    .split('-')
+    .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
+    .join(' ')
 }
 
 const starterLabels: Record<string, string> = {
@@ -34,7 +58,7 @@ const sideLabels: Record<string, string> = {
   brussels: 'Brussels Sprouts',
 }
 
-export function RSVPTable() {
+export function RSVPTable({ showActions = false }: { showActions?: boolean }) {
   const ref = useRef(null)
   const isInView = useInView(ref, { once: true, margin: '-100px' })
   const [rsvps, setRsvps] = useState<RSVP[]>([])
@@ -138,25 +162,61 @@ export function RSVPTable() {
                       className="border-b border-border/50 hover:bg-primary/5 transition-colors"
                     >
                       <td className="px-6 py-4">
-                        <p className="font-serif text-cream" style={{ fontFamily: 'var(--font-serif)' }}>{rsvp.guest_name}</p>
+                          <p className="font-serif text-cream" style={{ fontFamily: 'var(--font-serif)' }}>{rsvp.guest_name}</p>
                       </td>
                       <td className="px-6 py-4 hidden md:table-cell">
                         <p className="text-muted-foreground font-sans text-sm">
-                          {rsvp.starter ? starterLabels[rsvp.starter] || rsvp.starter : '-'}
+                          {rsvp.starter ? starterLabels[rsvp.starter] || prettyLabel(rsvp.starter) : '-'}
                         </p>
                       </td>
                       <td className="px-6 py-4">
                         <p className="text-cream font-sans text-sm">
-                          {entreeLabels[rsvp.entree] || rsvp.entree}
+                          {entreeLabels[rsvp.entree] || prettyLabel(rsvp.entree)}
                         </p>
                       </td>
                       <td className="px-6 py-4 hidden lg:table-cell">
                         <p className="text-muted-foreground font-sans text-sm">
                           {rsvp.sides.length > 0
-                            ? rsvp.sides.map((s) => sideLabels[s] || s).join(', ')
+                            ? rsvp.sides.map((s) => sideLabels[s] || prettyLabel(s)).join(', ')
                             : '-'}
                         </p>
                       </td>
+                      {showActions ? (
+                        <td className="px-6 py-4 text-right">
+                          <div className="flex items-center justify-end gap-2">
+                            <EditRsvpDialog rsvp={rsvp}>
+                              <Button variant="ghost" size="sm">Edit</Button>
+                            </EditRsvpDialog>
+                            <AlertDialog>
+                              <AlertDialogTrigger asChild>
+                                <Button variant="destructive" size="icon-sm" aria-label={`Delete ${rsvp.guest_name}`}>
+                                  <TrashIcon className="size-4" />
+                                </Button>
+                              </AlertDialogTrigger>
+                              <AlertDialogContent>
+                                <AlertDialogHeader>
+                                  <AlertDialogTitle>Delete RSVP</AlertDialogTitle>
+                                  <p className="text-sm text-muted-foreground">Are you sure you want to delete {rsvp.guest_name} from the guest list? This action cannot be undone.</p>
+                                </AlertDialogHeader>
+                                <AlertDialogFooter>
+                                  <AlertDialogCancel>Cancel</AlertDialogCancel>
+                                  <AlertDialogAction onClick={async () => {
+                                    try {
+                                      const res = await fetch(`/api/rsvps/${rsvp.id}`, { method: 'DELETE' })
+                                      if (!res.ok) throw new Error('Failed')
+                                      window.dispatchEvent(new Event('rsvp-updated'))
+                                    } catch (e) {
+                                      // eslint-disable-next-line no-console
+                                      console.error('Failed to delete RSVP', e)
+                                      alert('Failed to delete RSVP')
+                                    }
+                                  }}>Delete</AlertDialogAction>
+                                </AlertDialogFooter>
+                              </AlertDialogContent>
+                            </AlertDialog>
+                          </div>
+                        </td>
+                      ) : null}
                     </motion.tr>
                   ))}
                 </tbody>
@@ -164,6 +224,80 @@ export function RSVPTable() {
             </div>
           )}
         </motion.div>
+        {/* Red separator and Order summary */}
+        {!isLoading && rsvps.length > 0 && (
+          <>
+            <div className="w-full flex justify-center my-6">
+              <div className="w-24 h-px bg-primary" />
+            </div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              animate={isInView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.8, delay: 0.4 }}
+              className="mt-0 glass-card rounded-xl overflow-hidden p-6"
+            >
+              <div className="text-center mb-4">
+                <h3 className="text-2xl font-serif text-cream mb-2" style={{ fontFamily: 'var(--font-serif)' }}>
+                  Order Summary
+                </h3>
+                <div className="w-16 h-px bg-primary mx-auto mb-4" />
+                <p className="text-muted-foreground mb-4">Totals for starters, entrées and sides ordered.</p>
+              </div>
+
+            {/* compute counts */}
+            {(() => {
+              const starterCounts: Record<string, number> = {}
+              const entreeCounts: Record<string, number> = {}
+              const sideCounts: Record<string, number> = {}
+
+              for (const r of rsvps) {
+                const s = r.starter || 'none'
+                starterCounts[s] = (starterCounts[s] || 0) + 1
+
+                entreeCounts[r.entree] = (entreeCounts[r.entree] || 0) + 1
+
+                for (const sd of r.sides || []) {
+                  sideCounts[sd] = (sideCounts[sd] || 0) + 1
+                }
+              }
+
+              const renderRows = (map: Record<string, number>, labels: Record<string, string>) =>
+                Object.keys(map).sort().map((k) => (
+                  <tr key={k} className="border-b border-border/50">
+                    <td className="px-4 py-2 text-sm font-sans">{labels[k] || prettyLabel(k)}</td>
+                    <td className="px-4 py-2 text-sm font-sans">{map[k]}</td>
+                  </tr>
+                ))
+
+              return (
+                <div className="grid gap-6 md:grid-cols-3">
+                  <div>
+                    <h4 className="text-sm font-medium text-primary uppercase mb-2">Starters</h4>
+                    <table className="w-full">
+                      <tbody>{renderRows(starterCounts, starterLabels)}</tbody>
+                    </table>
+                  </div>
+
+                  <div>
+                    <h4 className="text-sm font-medium text-primary uppercase mb-2">Entrées</h4>
+                    <table className="w-full">
+                      <tbody>{renderRows(entreeCounts, entreeLabels)}</tbody>
+                    </table>
+                  </div>
+
+                  <div>
+                    <h4 className="text-sm font-medium text-primary uppercase mb-2">Sides</h4>
+                    <table className="w-full">
+                      <tbody>{renderRows(sideCounts, sideLabels)}</tbody>
+                    </table>
+                  </div>
+                </div>
+              )
+            })()}
+          </motion.div>
+          </>
+        )}
       </div>
     </section>
   )
