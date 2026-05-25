@@ -249,7 +249,7 @@ export function RSVPForm() {
           <div className="glass-card rounded-xl p-8">
             <h3 className="text-xl font-serif text-primary mb-2" style={{ fontFamily: 'var(--font-serif)' }}>Side Dishes</h3>
             <p className="text-sm text-muted-foreground mb-6 font-sans">Select up to 2 sides</p>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            <div className="flex flex-wrap gap-3 items-start">
               {sides.map((side) => (
                 <motion.button
                   key={side.id}
@@ -257,12 +257,17 @@ export function RSVPForm() {
                   onClick={() => toggleSide(side.id)}
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
-                  className={`p-4 rounded-lg border-2 text-left transition-all ${selectedSides.includes(side.id)
+                  className={`inline-flex flex-col self-start p-4 rounded-lg border-2 text-left transition-all w-fit ${selectedSides.includes(side.id)
                       ? 'border-primary bg-primary/10'
                       : 'border-border hover:border-primary/50'
                     }`}
                 >
-                  <p className="font-serif text-cream text-lg mb-1" style={{ fontFamily: 'var(--font-serif)' }}>{side.name}</p>
+                  <p
+                    className={`font-serif text-cream text-lg mb-1 ${side.id === 'side-rice-beans' ? 'whitespace-nowrap' : ''}`}
+                    style={{ fontFamily: 'var(--font-serif)' }}
+                  >
+                    {side.name}
+                  </p>
                   <p className="text-xs text-muted-foreground font-sans">{side.description}</p>
                 </motion.button>
               ))}

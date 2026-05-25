@@ -66,7 +66,7 @@ export const mains: MenuItem[] = [
 export const sides: MenuItem[] = [
     { id: 'side-mash-potatoes', name: 'Mash Potatoes', price: '$5.00' },
     { id: 'side-loaded-mixed-greens', name: 'Loaded Mixed Greens', price: '$6.00' },
-    { id: 'side-rice-beans', name: 'Rice and Beans', price: '$6.00' },
+    { id: 'side-rice-beans', name: 'Rice and Beans (Red Beans)', price: '$6.00' },
 ]
 
 const menu = { starters, entrees, mains, sides }

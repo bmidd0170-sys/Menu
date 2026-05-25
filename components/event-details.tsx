@@ -79,7 +79,7 @@ export function EventDetails() {
             Kimpton Grand Roatán Resort & Spa
           </p>
           <p className="text-muted-foreground font-sans">
-            <span className="text-lg" style={{ color: 'var(--red)' }}>ALera</span>
+            <span className="text-2xl md:text-3xl" style={{ color: 'var(--red)' }}>ALera</span>
           </p>
         </motion.div>
 
