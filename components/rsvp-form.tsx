@@ -272,7 +272,7 @@ export function RSVPForm() {
                 </motion.button>
               ))}
             </div>
-            <p className="text-sm text-cream mt-4 font-sans text-center">*Alcoholic beverages are not included*</p>
+            <p className="text-sm text-cream mt-4 font-sans text-center"><span style={{ color: 'var(--red)' }}>*</span>Alcoholic beverages are not included<span style={{ color: 'var(--red)' }}>*</span></p>
           </div>
 
           {/* Error message */}

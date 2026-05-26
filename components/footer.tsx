@@ -24,7 +24,7 @@ export function Footer() {
             className="text-2xl md:text-3xl font-serif text-cream italic"
             style={{ fontFamily: 'var(--font-serif)' }}
           >
-            &ldquo;Sixty years of <span style={{ color: 'var(--red)' }}>grace</span>, <span style={{ color: 'var(--red)' }}>love</span>, and <span style={{ color: 'var(--red)' }}>laughter</span>&rdquo;
+            &ldquo;Sixty years of <span style={{ color: 'var(--red)' }}>Grace</span>, <span style={{ color: 'var(--red)' }}>Love</span>, and <span style={{ color: 'var(--red)' }}>Laughter</span>&rdquo;
           </motion.p>
           
           <motion.div
@@ -52,7 +52,7 @@ export function Footer() {
             transition={{ duration: 0.8, delay: 0.4 }}
             className="pt-8"
           >
-            <p className="text-xs text-muted-foreground/60 font-sans tracking-widest uppercase">
+            <p className="text-xs font-sans tracking-widest uppercase" style={{ color: 'var(--red)' }}>
               Patricia&apos;s 60th Birthday Celebration
             </p>
             <div className="mt-1 space-y-1">
