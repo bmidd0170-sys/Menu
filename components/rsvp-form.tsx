@@ -249,7 +249,7 @@ export function RSVPForm() {
           <div className="glass-card rounded-xl p-8">
             <h3 className="text-xl font-serif text-primary mb-2" style={{ fontFamily: 'var(--font-serif)' }}>Side Dishes</h3>
             <p className="text-sm text-muted-foreground mb-6 font-sans">Select up to 2 sides</p>
-            <div className="flex flex-wrap gap-3 items-start">
+            <div className="grid md:grid-cols-3 gap-4">
               {sides.map((side) => (
                 <motion.button
                   key={side.id}
@@ -257,7 +257,7 @@ export function RSVPForm() {
                   onClick={() => toggleSide(side.id)}
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
-                  className={`inline-flex flex-col self-start p-4 rounded-lg border-2 text-left transition-all w-fit ${selectedSides.includes(side.id)
+                  className={`flex h-full w-full flex-col p-4 rounded-lg border-2 text-left transition-all ${selectedSides.includes(side.id)
                       ? 'border-primary bg-primary/10'
                       : 'border-border hover:border-primary/50'
                     }`}
