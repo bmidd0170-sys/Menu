@@ -52,8 +52,8 @@ export function Footer() {
             transition={{ duration: 0.8, delay: 0.4 }}
             className="pt-8"
           >
-            <p className="text-xs font-sans tracking-widest uppercase" style={{ color: 'var(--red)' }}>
-              Patricia&apos;s 60th Birthday Celebration
+            <p className="text-2xl md:text-3xl font-serif italic text-cream">
+              Patricia&apos;s <span style={{ color: 'var(--red)' }}>60th Birthday</span> Celebration
             </p>
             <div className="mt-1 space-y-1">
               <p className="text-xs text-muted-foreground/40 font-sans">
