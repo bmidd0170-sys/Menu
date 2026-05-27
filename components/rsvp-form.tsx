@@ -239,7 +239,7 @@ export function RSVPForm() {
                       : 'border-border text-muted-foreground hover:border-primary/50 hover:text-cream'
                   }`}
                 >
-                  {wantsBbq ? 'BBQ sauce on the side' : 'Add BBQ on the side'}
+                  {wantsBbq ? 'BBQ sauce on the side' : 'BBQ sauceon the side'}
                 </button>
               </motion.div>
             )}
