@@ -153,7 +153,7 @@ export function EditRsvpDialog({ rsvp, children }: { rsvp: RSVP; children: React
                 variant={wantsBbq ? 'default' : 'outline'}
                 onClick={() => setWantsBbq((prev) => !prev)}
               >
-                {wantsBbq ? 'BBQ preferred' : 'Place BBQ on the'}
+                {wantsBbq ? 'BBQ preferred' : 'Place BBQ on the side'}
               </Button>
             </div>
           )}
