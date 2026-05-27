@@ -228,7 +228,7 @@ export function RSVPForm() {
                 className="mt-6 rounded-lg border border-primary/30 bg-primary/5 p-4"
               >
                 <p className="text-sm text-cream font-sans mb-3">
-                  Would you prefer BBQ on your chicken, or on the side?
+                  Would you prefer BBQ sauce on your chicken, or on the side?
                 </p>
                 <button
                   type="button"
@@ -239,7 +239,7 @@ export function RSVPForm() {
                       : 'border-border text-muted-foreground hover:border-primary/50 hover:text-cream'
                   }`}
                 >
-                  {wantsBbq ? 'BBQ sauce on the side' : 'BBQ sauceon the side'}
+                  {wantsBbq ? 'BBQ sauce on the side' : 'BBQ sauce on the side'}
                 </button>
               </motion.div>
             )}
