@@ -7,8 +7,8 @@ export function HeroSection() {
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
       {/* Background image (place your image at /public/images/patricia-60.jpg) */}
       <div
-        className="absolute inset-0 z-0 bg-no-repeat bg-center bg-[length:80%_auto] md:bg-cover md:bg-center"
-        style={{ backgroundImage: "url('/1596298992813115960.png')" }}
+        className="absolute inset-0 z-0 bg-cover bg-no-repeat bg-top"
+        style={{ backgroundImage: "url('/1596298992813115960.png')", backgroundPosition: 'center top' }}
         aria-hidden="true"
       />
 
