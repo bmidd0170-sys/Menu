@@ -8,7 +8,7 @@ export function HeroSection() {
       {/* Background image (place your image at /public/images/patricia-60.jpg) */}
       <div
         className="absolute inset-0 z-0 bg-cover bg-no-repeat bg-top"
-        style={{ backgroundImage: "url('/1596298992813115960.png')", backgroundPosition: 'center top' }}
+        style={{ backgroundImage: "url('/1849042460367694260.png')", backgroundPosition: 'center top' }}
         aria-hidden="true"
       />
 
