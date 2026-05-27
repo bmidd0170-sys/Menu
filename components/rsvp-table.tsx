@@ -61,7 +61,7 @@ const sideLabels: Record<string, string> = {
 
 const formatPreference = (rsvp: RSVP) => {
   if (rsvp.bbq_preference) {
-    return 'BBQ preferred'
+    return 'place BBQ on the side'
   }
 
   return '-'
